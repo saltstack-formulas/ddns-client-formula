@@ -25,7 +25,11 @@ Example
 
 For bind:
 
-1. Create a dnssec key with 'dnssec-keygen -a HMAC-MD5 -b 512 -n HOST name-of-key'
+1. Create a dnssec key
+
+.. code::
+
+  dnssec-keygen -a HMAC-MD5 -b 512 -n HOST name-of-key
 
 2. Extract private key ('Key: ') from generated 'Ksomething.private'
 
