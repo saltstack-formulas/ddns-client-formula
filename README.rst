@@ -27,20 +27,20 @@ For bind:
 
 1. Create a dnssec key with 'dnssec-keygen -a HMAC-MD5 -b 512 -n HOST name-of-key'
 
-2. Extract private key ('Key: ') from generated 'Ksomething.private'.
+2. Extract private key ('Key: ') from generated 'Ksomething.private'
 
-3. Create /etc/bind/key.conf with content:
+3. Create /etc/bind/key.conf with content::
 
   key keyname. {
       algorithm HMAC-MD5;
       secret "PRIVATE KEY";
   };
 
-4. Edit /etc/bind/named.conf.local and include key file:
+4. Edit /etc/bind/named.conf.local and include key file::
 
   include "/etc/bind/keys.conf";
 
-5. Edit named.conf.local and allow key for host update in desired zone:
+5. Edit named.conf.local and allow key for host update in desired zone::
 
   zone "dyndns.my.tld" {
       type master;
@@ -51,11 +51,11 @@ For bind:
       };
   };
 
-6. Reload bind:
+6. Reload bind::
 
   rndc reload
 
-7. Create pillar:
+7. Create pillar::
 
   ddns_client:
     server: dns.my.tld
