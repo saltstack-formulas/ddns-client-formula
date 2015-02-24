@@ -32,6 +32,7 @@ For bind:
 3. Create /etc/bind/key.conf with content::
 
 .. code::
+
   key keyname. {
       algorithm HMAC-MD5;
       secret "PRIVATE KEY";
@@ -40,11 +41,13 @@ For bind:
 4. Edit /etc/bind/named.conf.local and include key file::
 
 .. code::
+
   include "/etc/bind/keys.conf";
 
 5. Edit named.conf.local and allow key for host update in desired zone::
 
 .. code::
+
   zone "dyndns.my.tld" {
       type master;
       file "/var/cache/bind/db.dyndns.my.tld";
@@ -57,11 +60,13 @@ For bind:
 6. Reload bind::
 
 .. code::
+
   rndc reload
 
 7. Create pillar::
 
 .. code::
+
   ddns_client:
     server: dns.my.tld
     zone: dyndns.my.tld
