@@ -1,0 +1,34 @@
+WGET=$(which wget)
+ECHO=$(which echo)
+NSUPDATE=$(which nsupdate)
+TOUCH=$(which touch)
+LOGGER=$(which logger)
+
+TMPIP=/tmp/.myip
+TMPFILE=/tmp/nsupdate
+
+IP=$({{ config.get('myip_command', '$(which wget) -q -O - http://what-is-my-ip.net/?text') }})
+
+if [ ! -f $TMPIP ]
+then
+    $TOUCH $TMPIP
+fi
+
+OLDIP=$(cat $TMPIP)
+
+if [ "$IP" = "$OLDIP" ]
+then
+    exit
+fi
+
+$ECHO "server {{ config.server }}" > $TMPFILE
+$ECHO "debug yes" >> $TMPFILE
+$ECHO "zone {{ config.zone }}." >> $TMPFILE
+$ECHO "update delete {{ config.hostname }}" >> $TMPFILE
+$ECHO "update add {{ config.hostname }} {{ config.get('ttl', 60) }} A $IP" >> $TMPFILE
+$ECHO "send" >> /tmp/nsupdate
+
+$NSUPDATE -k {{ script_dir }}/tsig.key -v $TMPFILE 2>&1
+
+echo $IP > $TMPIP
+$LOGGER "External IP changed to $IP"

@@ -1,0 +1,13 @@
+ddns_client:
+  myip_command: '$(which wget) -q -O - http://what-is-my-ip.net/?text'
+  server: my_ddns_server
+  zone: my_ddns_zone
+  hostname: my_hostname_to_update
+  ttl: 60
+  key:|
+    TSIG KEY HERE (named.conf format) e.g.
+    key name-of-key. {
+      algorithm HMAC-MD5;
+      secret "blablabla";
+    };
+  update_frequency: 5 # 0 < x < 60 min  
