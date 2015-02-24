@@ -33,6 +33,17 @@ For bind:
 
 2. Extract private key ('Key: ') from generated 'Ksomething.private'
 
+.. code::
+
+  > cat Ksomething.private
+  Private-key-format: v1.3
+  Algorithm: 157 (HMAC_MD5)
+  Key: PRIVATE_KEY_HERE <-----
+  Bits: AAA=
+  Created: 20150224131204
+  Publish: 20150224131204
+  Activate: 20150224131204
+
 3. Create /etc/bind/key.conf with content::
 
 .. code::
