@@ -20,6 +20,7 @@ OLDIP=$(cat $TMPIP)
 
 if [ "$IP" = "$OLDIP" ]
 then
+    $LOGGER "External IP not changed"
     exit
 fi
 
