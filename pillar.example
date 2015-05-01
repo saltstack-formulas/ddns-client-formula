@@ -11,3 +11,6 @@ ddns_client:
       secret "blablabla";
     };
   update_frequency: 5 # 0 < x < 60 min  
+  symlinks:
+    - /etc/ppp/ip-up.d/ddns
+    - symlink2

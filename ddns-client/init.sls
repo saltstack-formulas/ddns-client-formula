@@ -35,9 +35,24 @@ ddns_client_key_file:
 
 {% set update_frequency = salt['pillar.get']('ddns_client:update_frequency', '5') %}
 
-# cronjob
+{%- if salt['pillar.get']('ddns_client:symlinks', False) %}
+{# if symlinks is configured create all given links #}
+
+{%- for symlink in salt['pillar.get']('ddns_client:symlinks', []) %}
+ddns_client_symlinks_{{ loop.index }}:
+  file.symlink:
+    - name: {{ symlink }}
+    - target: {{ map.script_dir }}/ddns.sh
+      
+{%- endfor %}
+
+{%- else %}
+{# if symlinks is not configured create cronjob #}
+
 ddns_client_cronjob:
   file.managed:
     - name: {{ map.cronjob_dir }}/ddns
     - contents: |
         */{{ update_frequency }} * * * * {{ map.user }} {{ map.script_dir }}/ddns.sh
+
+{%- endif %}
