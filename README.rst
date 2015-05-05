@@ -18,7 +18,7 @@ Available states
 ``ddns-client``
 --------
 
-Installs and configures a ddns script for use with common name servers, e.g. bind.
+Installs and configures a ddns script for use with common name servers, e.g. bind. The script could be executed by a cronjob or by deploying symlinks, e.g. in /etc/ppp/ip-up.d.
 
 Example
 =======
